@@ -5,6 +5,7 @@ import MyTextArea from "../components/MyTextArea.vue";
 import { Form } from "vee-validate";
 import * as Yup from "yup";
 import { postData } from "../plugins/Api";
+import Swal from "sweetalert2";
 
 const router = useRouter();
 
@@ -31,13 +32,19 @@ const addData = async (values) => {
     berat: values.berat,
   };
   postData(sendData)
-      .then(() => {
-        router.push("/");
-        // console.log(sendData);
-      })
-      .catch((error) => {
-        alert(error);
+    .then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Berhasil disimpan",
+        showConfirmButton: false,
+        timer: 1500,
       });
+      router.push("/");
+    })
+    .catch((error) => {
+      alert(error);
+    });
 };
 </script>
 <template>

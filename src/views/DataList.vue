@@ -1,23 +1,13 @@
 <script setup>
 import { onMounted, reactive } from "vue";
-import { getData } from "../plugins/Api";
+import { getData, delData } from "../plugins/Api";
+import Swal from "sweetalert2";
 
 const obj = reactive({
   dataKambing: [],
 });
 
-// const delete = (id) => {
-//   delData(id)
-//       .then((Response) => {
-//         console.log(Response);
-//         obj.dataKambing = Response.data;
-//       })
-//       .catch((error) => {
-//         alert(error);
-//       });
-// }
-
-onMounted(() => {
+const onGetData = () => {
   getData()
     .then((Response) => {
       obj.dataKambing = Response.data;
@@ -25,6 +15,27 @@ onMounted(() => {
     .catch((error) => {
       alert(error);
     });
+};
+
+const onDelete = (id) => {
+  delData(id)
+    .then((Response) => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Data Berhasil dihapus",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      onGetData();
+    })
+    .catch((error) => {
+      alert(error);
+    });
+};
+
+onMounted(() => {
+  onGetData();
 });
 </script>
 <template>
@@ -32,7 +43,7 @@ onMounted(() => {
     <h6 class="mb-3 text-primary">Total Data : {{ obj.dataKambing.length }}</h6>
     <div class="container-data-list">
       <div
-        class="card-data d-flex mb-2"
+        class="card-data mb-2 flex-column"
         v-for="item in obj.dataKambing"
         :key="item.id"
       >
@@ -53,9 +64,32 @@ onMounted(() => {
             <td>{{ item.berat }}</td>
           </tr>
         </table>
-        <button class="btn-detail bg-primary p-2 rounded-3 text-white">
-          Detail
-        </button>
+        <div class="d-flex gap-2 mx-auto mt-3">
+          <button
+            @click="onDelete(item.id)"
+            type="button"
+            class="btn btn-danger"
+            style="
+              --bs-btn-padding-y: 0.25rem;
+              --bs-btn-padding-x: 0.5rem;
+              --bs-btn-font-size: 0.75rem;
+            "
+          >
+            Hapus
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            style="
+              --bs-btn-padding-y: 0.25rem;
+              --bs-btn-padding-x: 0.5rem;
+              --bs-btn-font-size: 0.75rem;
+              width: 100%;
+            "
+          >
+            Detail
+          </button>
+        </div>
       </div>
     </div>
   </section>
