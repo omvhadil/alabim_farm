@@ -1,60 +1,95 @@
 <script setup>
-import DataList from "./DataList.vue";
 import { useRouter } from "vue-router";
+import DataList from "./DataList.vue";
 
 const router = useRouter();
 </script>
 <template>
   <!-- ================== Fitur ====================== -->
-  <section class="p-3">
-    <h5>Fitur</h5>
-    <div class="row mt-3">
-      <button
-        @click="router.push('/TambahHewan')"
-        class="col-3 text-center"
-        style="cursor: pointer"
-      >
-        <img src="../assets/tambahHewan.png" alt="" style="width: 50px" />
-        <p class="text-small" for="">
-          Tambah <br />
-          Hewan
-        </p>
-      </button>
-      <div class="col-3 text-center" style="cursor: pointer">
-        <img src="../assets/Brcode.png" alt="" style="width: 50px" />
-        <p class="text-small" for="">
-          Scan <br />
-          Brcode
-        </p>
+  <section class="fitur">
+    <div
+      class="container-fitur section bg-white pt-2 pb-4 d-flex align-items-center justify-content-between"
+    >
+      <div class="fitur-search">
+        <form style="width: 100%">
+          <input
+            class="form-control"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </form>
+      </div>
+      <div class="fitur-tambah">
+        <button @click="router.push('/TambahHewan')">
+          <img src="../assets/tambahHewan.png" alt="" style="width: 45px" />
+        </button>
+      </div>
+      <div class="fitur-scan">
+        <img src="../assets/Brcode.png" alt="" style="width: 35px" />
       </div>
     </div>
   </section>
+
+  <!-- ================== Banner ====================== -->
+  <section class="banner section bg-white pb-4 pt-2">
+    <div
+      class="container-banner bg-primary p-3 d-flex align-items-center justify-content-between"
+      style="height: 150px; border-radius: 20px"
+    >
+      <h5 class="text-white">
+        berternak <br />
+        dengan mudah
+      </h5>
+      <img src="../assets/banner.png" alt="" style="width: 130px" />
+    </div>
+  </section>
+
   <!-- ================== Data Kandang ====================== -->
-  <div class="data-container bg-primary mb-4">
-    <section class="ps-3 pe-3 mb-4">
-      <h5 class="text-white">Data Kandang</h5>
-      <div class="row mt-3 d-flex justify-content-center gap-3">
-        <div class="col-5 text-center bg-white text-dark rounded p-2">
-          <img src="../assets/jantan.png" alt="" style="width: 40px" />
-          <h6>Jantan : 0</h6>
+  <section class="data-ternak section bg-white pt-3 pb-5">
+    <div class="container-data-ternak">
+      <div class="d-flex justify-content-center gap-3 mb-3">
+        <div
+          class="rounded p-2 ps-3 shadow-sm d-flex align-items-center"
+          style="width: 100%"
+        >
+          <img src="../assets/jantan.png" class="me-3" style="width: 40px" />
+          <p class="text-secondary mb-0">
+            Jantan <span class="text-dark">: -</span>
+          </p>
         </div>
-        <div class="col-5 text-center bg-white text-dark rounded p-2">
-          <img src="../assets/betina.png" alt="" style="width: 40px" />
-          <h6>Betina : 0</h6>
+        <div
+          class="rounded p-2 ps-3 shadow-sm d-flex align-items-center"
+          style="width: 100%"
+        >
+          <img src="../assets/betina.png" class="me-3" style="width: 40px" />
+          <p class="text-secondary mb-0">
+            Betina <span class="text-dark">: -</span>
+          </p>
         </div>
       </div>
-      <div class="row mt-3 d-flex justify-content-center gap-3">
-        <div class="col-5 text-center bg-white text-dark rounded p-2">
-          <img src="../assets/terjual.png" alt="" style="width: 40px" />
-          <h6>Terjual : 0</h6>
+      <div class="d-flex justify-content-center gap-3">
+        <div
+          class="rounded p-2 ps-3 shadow-sm d-flex align-items-center"
+          style="width: 100%"
+        >
+          <img src="../assets/terjual.png" class="me-3" style="width: 40px" />
+          <p class="text-secondary mb-0">
+            Terjual <span class="text-dark">: -</span>
+          </p>
         </div>
-        <div class="col-5 text-center bg-white text-dark rounded p-2">
-          <img src="../assets/mati.png" alt="" style="width: 40px" />
-          <h6>Mati : 0</h6>
+        <div
+          class="rounded p-2 ps-3 shadow-sm d-flex align-items-center"
+          style="width: 100%"
+        >
+          <img src="../assets/mati.png" class="me-3" style="width: 40px" />
+          <p class="text-secondary mb-0">
+            Mati <span class="text-dark">: -</span>
+          </p>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
   <!-- ================== Total Data ====================== -->
   <DataList />
 </template>
@@ -63,5 +98,8 @@ const router = useRouter();
   width: 100%;
   height: auto;
   padding: 20px 0;
+}
+.text-small {
+  font-size: 11px;
 }
 </style>
