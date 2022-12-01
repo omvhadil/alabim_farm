@@ -1,7 +1,7 @@
 <script setup>
 import { ErrorMessage, Field } from "vee-validate";
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     default: "Input",
@@ -10,12 +10,14 @@ defineProps({
     type: String,
   },
   errors: {
-    type: String,
     required: true,
   },
   placeholder: {
     type: String,
     default: "text",
+  },
+  type: {
+    required: true,
   },
 });
 </script>
@@ -23,7 +25,7 @@ defineProps({
   <div class="mb-3">
     <label :for="title" class="form-label">{{ title }}</label>
     <Field
-      type="text"
+      :type="type"
       class="form-control"
       :class="{ 'is-invalid': errors }"
       :id="title"

@@ -2,8 +2,9 @@
 import { useRouter } from "vue-router";
 import MyInput from "../components/MyInput.vue";
 import MyTextArea from "../components/MyTextArea.vue";
-import { Field, Form } from "vee-validate";
+import { Form } from "vee-validate";
 import * as Yup from "yup";
+import { postData } from "../plugins/Api";
 
 const router = useRouter();
 
@@ -17,22 +18,26 @@ const schema = Yup.object().shape({
   berat: Yup.string()
     .required("Berat Wajib Diisi")
     .typeError("Berat Wajib Diisi"),
+  keterangan: Yup.string()
+    .required("keterangan Wajib Diisi")
+    .typeError("keterangan Wajib Diisi"),
 });
 
 const addData = async (values) => {
   const sendData = {
-    namaKambing: values.dataKambing,
-    tanggal: values.tanggal,
+    namaKambing: values.namaKambing,
+    keterangan: values.keterangan,
+    tanggalMasuk: values.tanggalMasuk,
     berat: values.berat,
   };
-  await axios
-    .post("https://6381d5c59842ca8d3c9a9d36.mockapi.io/db_kambing", sendData)
-    .then(() => {
-      router.push("./DataList.vue");
-    })
-    .catch((error) => {
-      alert(error);
-    });
+  postData(sendData)
+      .then(() => {
+        router.push("/");
+        // console.log(sendData);
+      })
+      .catch((error) => {
+        alert(error);
+      });
 };
 </script>
 <template>
@@ -56,23 +61,32 @@ const addData = async (values) => {
       <Form @submit="addData" :validation-schema="schema" v-slot="{ errors }">
         <MyInput
           name="namaKambing"
+          type="text"
           title="Nama Hewan"
           :errors="errors.namaKambing"
           placeholder="Masukkan Nama Hewan"
         />
         <MyInput
-          name="tanggal"
+          name="tanggalMasuk"
+          type="date"
           title="Tanggal Masuk"
-          :errors="errors.tanggal"
+          :errors="errors.tanggalMasuk"
           placeholder="Masukkan Tanggal Masuk"
         />
         <MyInput
           name="berat"
+          type="number"
           title="Berat /kg"
           :errors="errors.berat"
           placeholder="Masukkan Berat /kg"
         />
-        <!-- <MyTextArea title="Keterangan" placeholder="Masukkan keterangan" /> -->
+        <MyTextArea
+          title="Keterangan"
+          type="text"
+          name="keterangan"
+          :errors="errors.keterangan"
+          placeholder="Masukkan keterangan"
+        />
         <div class="d-grid gap-2 col-6 mx-auto">
           <button class="btn btn-primary mt-3" type="submit">Button</button>
         </div>
